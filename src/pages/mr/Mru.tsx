@@ -14,17 +14,28 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridReact } from 'ag-grid-react';
 import { themeQuartz } from "ag-grid-community"; // or themeBalham, themeAlpine
 
-function Mru() {
+interface ChartTrace {
+    x: number[];
+    y: number[];
+    type: 'scatter';
+    mode: 'lines+markers' | 'markers' | 'lines' | 'text' | 'none' | 'text+markers' | 'text+lines' | 'text+lines+markers';
+    marker?: { color: string };
+    line?: { color: string };
+    name: string;
+    showlegend: boolean;
+}
+
+
+const Mru = () => {
+    let tiempo: number[] = [];
+    let posicion: number[] = [];
+    const posicionTeorica: number[] = [];
     const [velocidad, setVelocidad] = useState<number>(27);
     const [masa, setMasa] = useState<number>(3);
     const [xIni, setXIni] = useState<number>(0);
     const [tTray, setTTray] = useState<number>(30);
     const [N, setN] = useState<number>(5);
-    let posicion: number[] = [];
-    const posicionTeorica: number[] = [];
-    let tiempo: number[] = [];
-    let [data, setData] = useState<{ tiempo: number, posicionMedida: number, posicionTeorica: number }[]>([]);
-    const [chartData, setChartData] = useState<any[]>([{
+    const [chartData, setChartData] = useState<ChartTrace[]>([{
                         x: tiempo,
                         y: posicion,
                         type: 'scatter',
@@ -33,10 +44,13 @@ function Mru() {
                         name: 'Posición medida',
                         showlegend: true,
                     }])
-    const [colDefs, setColDefs] = useState([
-        { field: "Tiempo / s" },
-        { field: "Posición Medida / m" },
-        { field: "Posición Teórica / m" },
+
+    let [data, setData] = useState<{ tiempo: number, posicionMedida: number, posicionTeorica: number }[]>([]);
+    
+    const [colDefs, setColDefs] = useState<{ field: "tiempo" | "posicionMedida" | "posicionTeorica" }[]>([
+        { field: "tiempo" },
+        { field: "posicionMedida" },
+        { field: "posicionTeorica" },
         ])
         const myTheme = themeQuartz.withParams({
             /* Low spacing = very compact */
@@ -69,7 +83,7 @@ function Mru() {
         }
         const newData: { tiempo: number, posicionMedida: number, posicionTeorica: number }[] = []
         for (let i = 0; i< N; i++) {
-            newData.push({ tiempo: tiempo[i], posicionMedida: posicion[i], posicionTeorica: posicionTeorica[i] });
+            newData.push({ "tiempo": tiempo[i], "posicionMedida": posicion[i], "posicionTeorica": posicionTeorica[i] });
         }
         setData(newData)
         console.log(posicion);
@@ -95,9 +109,9 @@ function Mru() {
                     }
                 ])
         setColDefs([
-        { field: "tiempo" },
-        { field: "posicionMedida" },
-        { field: "posicionTeorica" },
+        { field: "tiempo" as const },
+        { field: "posicionMedida" as const },
+        { field: "posicionTeorica" as const },
         ])
         
     }
