@@ -25,7 +25,7 @@ interface ChartTrace {
     showlegend: boolean;
 }
 
-
+// Movimiento Rectilíneo Uniforme (MRU)
 const Mru = () => {
     let tiempo: number[] = [];
     let posicion: number[] = [];
