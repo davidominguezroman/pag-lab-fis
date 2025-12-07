@@ -13,6 +13,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), VitePWA({
     registerType: 'autoUpdate',
     injectRegister: false,
+    base: '/pag-lab-fis/',
+    scope: '/pag-lab-fis/',
 
     pwaAssets: {
       disabled: false,
