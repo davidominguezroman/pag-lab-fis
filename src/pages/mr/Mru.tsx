@@ -1,12 +1,8 @@
-import Layout from "@/components/Layout/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label"
 import {  useState } from "react";
-import {
-
-  TableRow,
-} from "@/components/ui/table";
+import { TableRow } from "@/components/ui/table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Rocket, FileSpreadsheet } from "lucide-react";
 import Plot from 'react-plotly.js';
@@ -15,6 +11,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridReact } from 'ag-grid-react';
 import { themeQuartz } from "ag-grid-community"; // or themeBalham, themeAlpine
 import { exportToExcel } from "@/lib/exportToExcel";
+import Layout from "@/components/Layout/layout";
 
 interface ChartTrace {
     x: number[];
@@ -69,11 +66,6 @@ const Mru = () => {
             borderColor: 'oklch(0.704 0.04 256.788)', // ring
         });
     function trayectoria() {
-        //if(velocidad !== undefined && masa !== undefined && xIni !== undefined && tTray !== undefined && N !== undefined && masa > 0 && tTray > 0 && 0 < N && N > 100) {
-        console.log(velocidad);
-        console.log(masa);
-        console.log(xIni);
-        console.log(tTray);
         setData([]);
         posicion = [];
         tiempo = [];
@@ -90,8 +82,6 @@ const Mru = () => {
             newData.push({ "tiempo": tiempo[i], "posicionMedida": posicion[i], "posicionTeorica": posicionTeorica[i] });
         }
         setData(newData)
-        console.log(posicion);
-        console.log(posicionTeorica);
         setChartData([
                     {
                         x: tiempo,
@@ -124,7 +114,7 @@ const Mru = () => {
 
     return(
         <>
-            <Layout>
+        <Layout>
                 <h1 style={{ textAlign: "center" }}>MRU</h1>
                 <Alert >
                 <AlertTitle>Atención!</AlertTitle>
