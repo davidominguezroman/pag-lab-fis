@@ -12,7 +12,7 @@ export default defineConfig({
   },
   plugins: [react(), tailwindcss(), VitePWA({
     registerType: 'autoUpdate',
-    injectRegister: false,
+    injectRegister: 'auto',
     base: '/pag-lab-fis/',
     scope: '/pag-lab-fis/',
 
@@ -26,13 +26,49 @@ export default defineConfig({
       short_name: 'lab-fis',
       description: 'Laboratorio virtual de física',
       theme_color: '#ffffff',
+      background_color: '#ffffff',
+      display: 'standalone',
+      start_url: '/pag-lab-fis/',
     },
 
     workbox: {
-      globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+      globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
       cleanupOutdatedCaches: true,
       clientsClaim: true,
+      skipWaiting: true,
       maximumFileSizeToCacheInBytes: 7 * 1024 * 1024, // 7 MiB (default is 2 MiB)
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'google-fonts-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+            },
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'gstatic-fonts-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+            },
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
+        }
+      ],
+      navigateFallback: '/pag-lab-fis/index.html',
+      navigateFallbackDenylist: [/^\/api/],
     },
 
     devOptions: {
