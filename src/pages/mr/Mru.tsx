@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Rocket, FileSpreadsheet } from "lucide-react";
 import Plot from 'react-plotly.js';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -157,7 +158,13 @@ const Mru = () => {
                             </TableRow>
                         </table>
                         <div style={{ marginTop: 12 }}>
-                            <Button onClick={trayectoria}>Calcular Trayectoria</Button>
+                            <Button 
+                                onClick={trayectoria}
+                                disabled={masa <= 0 || N <= 0 || N > 100 || tTray <= 0}
+                            >
+                                <Rocket className="mr-2 h-4 w-4" />
+                                Calcular Trayectoria
+                            </Button>
                             <Button 
                                 onClick={() => {
                                     const now = new Date();
@@ -176,6 +183,7 @@ const Mru = () => {
                                 disabled={data.length === 0}
                                 style={{ marginLeft: 8 }}
                             >
+                                <FileSpreadsheet className="mr-2 h-4 w-4" />
                                 Exportar a Excel
                             </Button>
                         </div>
@@ -206,27 +214,27 @@ const Mru = () => {
                         width: 1440,
                         height: 1080,
                         title: { text: 'Posición en función del tiempo' },
-                        paper_bgcolor: '#0f172b',
-                        plot_bgcolor: '#0f172b',
-                        font: { color: 'white' },
+                        paper_bgcolor: '#FFFFFF',
+                        plot_bgcolor: '#FFFFFF',
+                        font: { color: 'black' },
                         margin: { t: 60, b: 60, l: 60, r: 60 },
                         xaxis: {
                             title: { text: 'Tiempo (s)' },
                             gridcolor: '#222', // even more muted gray
                             gridwidth: 0.3,
-                            linecolor: 'white',
-                            tickcolor: 'white',
-                            tickfont: { color: 'white' },
-                            color: 'white', // Force axis line and label color
+                            linecolor: 'grey',
+                            tickcolor: 'grey',
+                            tickfont: { color: 'grey' },
+                            color: 'grey', // Force axis line and label color
                         },
                         yaxis: {
                             title: { text: 'Posición (m)' },
                             gridcolor: '#222', // even more muted gray
                             gridwidth: 0.3,
-                            linecolor: 'white',
-                            tickcolor: 'white',
-                            tickfont: { color: 'white' },
-                            color: 'white', // Force axis line and label color
+                            linecolor: 'grey',
+                            tickcolor: 'grey',
+                            tickfont: { color: 'grey' },
+                            color: 'grey', // Force axis line and label color
                         },
                     }}
                     
