@@ -69,9 +69,9 @@ export default function Cabecera() {
             <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
-                  <a
+                  <Link
+                    to="/mr/Inves"
                     className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden transition-all duration-200 select-none focus:shadow-md md:p-6"
-                    href="/mr/Inves"
                   >
                     <div className="mb-2 text-lg font-medium sm:mt-4">
                       Investiga
@@ -79,7 +79,7 @@ export default function Cabecera() {
                     <p className="text-muted-foreground text-sm leading-tight">
                       Accede a toda la información sobre los movimientos rectilíneos.
                     </p>
-                  </a>
+                  </Link>
                 </NavigationMenuLink>
               </li>
               <ListItem href="/mr/Mru" title="MRU">
