@@ -13,7 +13,9 @@ const router = createBrowserRouter([
   {path: "/mr", element: <Inves/>},
   {path: "/mr/Inves", element: <Inves/>},
   {path: "/mr/Mru", element: <Mru />}
-]);
+], {
+  basename: "/pag-lab-fis"
+});
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
