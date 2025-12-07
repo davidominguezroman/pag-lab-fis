@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   base: '/pag-lab-fis/',
   build: {
-    chunkSizeWarningLimit: 7000, // 7000 kB (suppress warning for chunks up to 7 MB)
+    chunkSizeWarningLimit: 8000, // 8000 kB (suppress warning for chunks up to 8 MB)
   },
   plugins: [react(), tailwindcss(), VitePWA({
     registerType: 'autoUpdate',
@@ -36,7 +36,7 @@ export default defineConfig({
       cleanupOutdatedCaches: true,
       clientsClaim: true,
       skipWaiting: true,
-      maximumFileSizeToCacheInBytes: 7 * 1024 * 1024, // 7 MiB (default is 2 MiB)
+      maximumFileSizeToCacheInBytes: 8 * 1024 * 1024, // 8 MiB (default is 2 MiB)
       runtimeCaching: [
         {
           urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

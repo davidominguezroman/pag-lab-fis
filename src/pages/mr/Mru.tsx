@@ -13,6 +13,7 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridReact } from 'ag-grid-react';
 import { themeQuartz } from "ag-grid-community"; // or themeBalham, themeAlpine
+import { exportToExcel } from "@/lib/exportToExcel";
 
 interface ChartTrace {
     x: number[];
@@ -45,7 +46,7 @@ const Mru = () => {
                         showlegend: true,
                     }])
 
-    let [data, setData] = useState<{ tiempo: number, posicionMedida: number, posicionTeorica: number }[]>([]);
+    const [data, setData] = useState<{ tiempo: number, posicionMedida: number, posicionTeorica: number }[]>([]);
     
     const [colDefs, setColDefs] = useState<{ field: "tiempo" | "posicionMedida" | "posicionTeorica" }[]>([
         { field: "tiempo" },
@@ -70,7 +71,7 @@ const Mru = () => {
         console.log(masa);
         console.log(xIni);
         console.log(tTray);
-        data = [];
+        setData([]);
         posicion = [];
         tiempo = [];
         for (let i = 0; i < N; i++) {
@@ -157,6 +158,26 @@ const Mru = () => {
                         </table>
                         <div style={{ marginTop: 12 }}>
                             <Button onClick={trayectoria}>Calcular Trayectoria</Button>
+                            <Button 
+                                onClick={() => {
+                                    const now = new Date();
+                                    const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, -5);
+                                    exportToExcel({ 
+                                        data: data.map(row => ({
+                                            'Tiempo (s)': row.tiempo,
+                                            'Posición Medida (m)': row.posicionMedida,
+                                            'Posición Teórica (m)': row.posicionTeorica
+                                        })),
+                                        fileName: `datos-mru-${timestamp}`,
+                                        sheetName: 'Resultados MRU'
+                                    })
+                                }}
+                                variant="outline"
+                                disabled={data.length === 0}
+                                style={{ marginLeft: 8 }}
+                            >
+                                Exportar a Excel
+                            </Button>
                         </div>
                     </div>
 
