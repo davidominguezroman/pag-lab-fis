@@ -10,7 +10,6 @@ import Mru from "./pages/mr/Mru";
 
 const router = createBrowserRouter([
   {path: "/", element: <App />},
-  {path: "/mr", element: <Inves/>},
   {path: "/mr/Inves", element: <Inves/>},
   {path: "/mr/Mru", element: <Mru />}
 ], {
