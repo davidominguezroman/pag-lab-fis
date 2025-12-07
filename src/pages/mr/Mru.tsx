@@ -49,7 +49,7 @@ const Mru = () => {
 
     const [data, setData] = useState<{ tiempo: number, posicionMedida: number, posicionTeorica: number }[]>([]);
     
-    const [colDefs, setColDefs] = useState<{ field: "tiempo" | "posicionMedida" | "posicionTeorica" }[]>([
+    const [colDefs, setColDefs] = useState<{ headerName?: string; field: "tiempo" | "posicionMedida" | "posicionTeorica" }[]>([
         { field: "tiempo" },
         { field: "posicionMedida" },
         { field: "posicionTeorica" },
@@ -58,13 +58,15 @@ const Mru = () => {
             /* Low spacing = very compact */
             spacing: 2,
             /* Changes the colour of the grid text */
-            foregroundColor: 'rgb(14, 68, 145)',
+            foregroundColor: 'oklch(0.208 0.042 265.755)', // primary color
             /* Changes the colour of the grid background */
-            backgroundColor: 'rgb(241, 247, 255)',
+            backgroundColor: 'rgb(255, 255, 255)',
             /* Changes the header colour of the top row */
-            headerBackgroundColor: 'rgb(228, 237, 250)',
+            headerBackgroundColor: 'oklch(0.968 0.007 247.896)', // secondary
             /* Changes the hover colour of the row*/
-            rowHoverColor: 'rgb(216, 226, 255)',
+            rowHoverColor: 'oklch(0.929 0.013 255.508)', // border
+            /* Changes the grid border color */
+            borderColor: 'oklch(0.704 0.04 256.788)', // ring
         });
     function trayectoria() {
         //if(velocidad !== undefined && masa !== undefined && xIni !== undefined && tTray !== undefined && N !== undefined && masa > 0 && tTray > 0 && 0 < N && N > 100) {
@@ -111,9 +113,9 @@ const Mru = () => {
                     }
                 ])
         setColDefs([
-        { field: "tiempo" as const },
-        { field: "posicionMedida" as const },
-        { field: "posicionTeorica" as const },
+        { headerName: "Tiempo / s", field: "tiempo" as const },
+        { headerName: "Posición Medida / m", field: "posicionMedida" as const },
+        { headerName: "Posición Teórica / m", field: "posicionTeorica" as const },
         ])
         
     }
