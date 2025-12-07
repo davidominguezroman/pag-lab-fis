@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/lab-fis/',
+  base: '/pag-lab-fis/',
   build: {
     chunkSizeWarningLimit: 7000, // 7000 kB (suppress warning for chunks up to 7 MB)
   },
