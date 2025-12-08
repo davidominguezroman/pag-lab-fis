@@ -38,7 +38,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           }}
         >
             <img 
-            src = "./favicon.svg"
+            src = "./favicon.ico"
             alt="Lab Icon"
             style={{ width: "2rem", height: "2rem", marginBottom: "0.5rem" }}
             />
