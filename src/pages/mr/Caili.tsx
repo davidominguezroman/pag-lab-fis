@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label"
 import {  useState } from "react";
-import { TableRow } from "@/components/ui/table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Rocket, FileSpreadsheet } from "lucide-react";
 import Plot from 'react-plotly.js';
@@ -11,6 +10,14 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridReact } from 'ag-grid-react';
 import { themeQuartz } from "ag-grid-community"; // or themeBalham, themeAlpine
 import { exportToExcel } from "@/lib/exportToExcel";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import Layout from "@/components/Layout/layout";
 
 interface ChartTrace {
@@ -33,7 +40,7 @@ const Mrua = () => {
     let velocidadMedida: number[] = [];
     const aceleracion = -9.81; // m/s²
     const [masa, setMasa] = useState<number>(3);
-    const [yIni, setYIni] = useState<number>(0);
+    const [yIni, setYIni] = useState<number>(30);
     const [N, setN] = useState<number>(100);
     const [chartDataPos, setChartDataPos] = useState<ChartTrace[]>([{
                         x: tiempo,
@@ -162,78 +169,89 @@ const Mrua = () => {
         <>
         <Layout>
                 <h1 style={{ textAlign: "center" }}>Caída Libre</h1>
-                <Alert >
-                <AlertTitle>Atención!</AlertTitle>
-                <AlertDescription>
-                    Recuerda que no funcionará si: 
-                    <ul>
-                        <li>La masa es menor o igual que cero</li>
-                        <li>El tiempo es menor o igual que cero</li>
-                        <li>El número de cálculos es menor o igual que cero</li>
-                        <li>El número de cálculos es mayor que 500</li>
-                    </ul>
-                </AlertDescription>
-                </Alert>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Alert style={{ maxWidth: '450px' }}>
+                    <AlertTitle>Atención!</AlertTitle>
+                    <AlertDescription>
+                        Recuerda que no funcionará si: 
+                        <ul>
+                            <li>La masa es menor o igual que cero</li>
+                            <li>El tiempo es menor o igual que cero</li>
+                            <li>El número de cálculos es menor o igual que cero</li>
+                            <li>El número de cálculos es mayor que 500</li>
+                        </ul>
+                    </AlertDescription>
+                    </Alert>
+                </div>
                 <br></br>
-                <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-                    <div style={{ flex: '1 1 320px', maxWidth: '48%' }}>
-                        <table>
-                            <TableRow>
-                                <Label>Masa(kg): </Label>
-                                <Input style={{ width: "150px" }}  placeholder="Masa" value={masa} onChange={e => setMasa(Number(e.target.value))}/>
-                            </TableRow>
-                            <TableRow>
-                                <Label>Posición Inicial(m):</Label>
-                                <Input style={{ width: "150px" }}  placeholder="Posición Inicial" value={yIni} onChange={e => setYIni(Number(e.target.value))}/>
-                                </TableRow>
-                            <TableRow>
-                                <Label>Número de Cálculos: </Label>
-                                <Input style={{ width: "150px" }}  placeholder="Número de Cálculos" value={N} onChange={e => setN(Number(e.target.value))}/>
-                            </TableRow>
-                        </table>
-                        <div style={{ marginTop: 12 }}>
-                            <Button 
-                                onClick={trayectoria}
-                                disabled={masa <= 0 || N <= 0 || N > 500 || yIni <= 0}
-                            >
-                                <Rocket className="mr-2 h-4 w-4" />
-                                Calcular Trayectoria
-                            </Button>
-                            <Button 
-                                onClick={() => {
-                                    const now = new Date();
-                                    const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, -5);
-                                    exportToExcel({ 
-                                        data: data.map(row => ({
-                                            'Tiempo (s)': row.tiempo,
-                                            'Posición Medida (m)': row.posicionMedida,
-                                            'Posición Teórica (m)': row.posicionTeorica,
-                                            'Velocidad Medida (m/s)': row.velocidadMedida,
-                                            'Velocidad Teórica (m/s)': row.VelocidadTeorica
-                                        })),
-                                        fileName: `datos-mru-${timestamp}`,
-                                        sheetName: 'Resultados MRU'
-                                    })
-                                }}
-                                variant="outline"
-                                disabled={data.length === 0}
-                                style={{ marginLeft: 8 }}
-                            >
-                                <FileSpreadsheet className="mr-2 h-4 w-4" />
-                                Exportar a Excel
-                            </Button>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: 80, flexWrap: 'nowrap', alignItems: 'flex-start', justifyContent: 'center' }}>
+                        <div style={{ flex: '0 0 auto', width: '600px' }}>
+                            <Card style={{ height: 400 }}>
+                                <CardHeader>
+                                    <CardTitle>Datos Iniciales</CardTitle>
+                                    <CardDescription>Introduce los valores iniciales para el cálculo de la caída libre.</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <Label>Masa (kg): </Label>
+                                    <Input style={{ width: "150px" }}  placeholder="Masa" value={masa} onChange={e => setMasa(Number(e.target.value))}/>
+                                </CardContent>
+                                <CardContent>
+                                    <Label>Posición Inicial (m):</Label>
+                                    <Input style={{ width: "150px" }}  placeholder="Posición Inicial" value={yIni} onChange={e => setYIni(Number(e.target.value))}/>
+                                </CardContent>
+                                <CardContent>
+                                    <Label>Número de Cálculos: </Label>
+                                    <Input style={{ width: "150px" }}  placeholder="Número de Cálculos" value={N} onChange={e => setN(Number(e.target.value))}/>
+                                </CardContent>
+                                <CardFooter>
+                                    <p>Recuerda que los datos tienen que introducirse en las unidades correctas.</p>
+                                </CardFooter>
+                            </Card>
                         </div>
-                    </div>
 
-                    <div style={{ height: 500,width: 1000 }} className="ag-theme-quartz">
+                        <div style={{ flex: '0 0 auto', width: '1000px', height: 400 }} className="ag-theme-quartz">
                         <AgGridReact
                         theme={myTheme}
                         rowData={data}
                         columnDefs={colDefs}
                     />
                     </div>
+                    </div>
+                    <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16 }}>
+                        <Button 
+                            onClick={trayectoria}
+                            disabled={masa <= 0 || N <= 0 || N > 500 || yIni <= 0}
+                        >
+                            <Rocket className="mr-2 h-4 w-4" />
+                            Calcular Trayectoria
+                        </Button>
+                        <Button 
+                            onClick={() => {
+                                const now = new Date();
+                                const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, -5);
+                                exportToExcel({ 
+                                    data: data.map(row => ({
+                                        'Tiempo (s)': row.tiempo,
+                                        'Posición Medida (m)': row.posicionMedida,
+                                        'Posición Teórica (m)': row.posicionTeorica,
+                                        'Velocidad Medida (m/s)': row.velocidadMedida,
+                                        'Velocidad Teórica (m/s)': row.VelocidadTeorica
+                                    })),
+                                    fileName: `datos-caida-libre-${timestamp}`,
+                                    sheetName: 'Resultados Caída Libre'
+                                })
+                            }}
+                            variant="outline"
+                            disabled={data.length === 0}
+                        >
+                            <FileSpreadsheet className="mr-2 h-4 w-4" />
+                            Exportar a Excel
+                        </Button>
+                    </div>
                 </div>
               
+                <br></br>
                 <br></br>
                 
             <div style={{
@@ -273,10 +291,11 @@ const Mrua = () => {
                             color: 'grey', // Force axis line and label color
                         },
                     }}
-                    
-                    
+                    config={{ displayModeBar: false }}
+                    style={{ borderRadius: '12px' }}
                 />
             </div>
+            <br></br>
             <div style={{
                                 borderRadius: 12,
                                 boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
@@ -314,10 +333,11 @@ const Mrua = () => {
                             color: 'grey', // Force axis line and label color
                         },
                     }}
-                    
-                    
+                    config={{ displayModeBar: false }}
+                    style={{ borderRadius: '12px' }}
                 />
             </div>
+            <br></br>
             </Layout>
         </>
     );    

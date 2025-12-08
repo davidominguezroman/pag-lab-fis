@@ -51,6 +51,12 @@ export default function Cabecera() {
               <ListItem href="/mr/Caili" title="Caída Libre">
                 Caída Libre.
               </ListItem>
+              <ListItem href="/mr/Tiropar" title="Tiro Parabólico">
+                Tiro Parabólico.
+              </ListItem>
+              <ListItem href="/mr/Tirohor" title="Tiro Horizontal">
+                Tiro Horizontal.
+              </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

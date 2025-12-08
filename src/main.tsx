@@ -11,6 +11,8 @@ import Mrua from "./pages/mr/Mrua";
 import Mcu from "./pages/mc/Mcu";
 import Mcua from "./pages/mc/Mcua";
 import Caili from "./pages/mr/Caili";
+import Tiropar from "./pages/mr/Tiropar";
+import Tirohor from "./pages/mr/Tirohor";
 
 const router = createBrowserRouter([
   {path: "/", element: <App />},
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
   {path: "/mc/Mcu", element: <Mcu />},
   {path: "/mc/Mcua", element: <Mcua />},
   {path: "/mr/Caili", element: <Caili />},
+  {path: "/mr/Tiropar", element: <Tiropar />},
+  {path: "/mr/Tirohor", element: <Tirohor />},
 ], {
   basename: "/pag-lab-fis"
 });
