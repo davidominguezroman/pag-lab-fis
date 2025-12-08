@@ -73,9 +73,9 @@ const Mru = () => {
             const t = tTray * i / (N-1);
             const xTeo = xIni + velocidad * t;
             const x = xTeo + (Math.random() * 0.05 * xTeo);
-            posicionTeorica.push(Number(xTeo.toFixed(4)));
-            posicion.push(Number(x.toFixed(4)));
-            tiempo.push(Number(t.toFixed(4)));
+            posicionTeorica.push(Number(xTeo.toFixed(3)));
+            posicion.push(Number(x.toFixed(3)));
+            tiempo.push(Number(t.toFixed(3)));
         }
         const newData: { tiempo: number, posicionMedida: number, posicionTeorica: number }[] = []
         for (let i = 0; i< N; i++) {

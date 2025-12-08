@@ -48,6 +48,9 @@ export default function Cabecera() {
               <ListItem href="/mr/Mrua" title="MRUA">
                 Movimiento Rectilíneo Uniformemente Acelerado.
               </ListItem>
+              <ListItem href="/mr/Caili" title="Caída Libre">
+                Caída Libre.
+              </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

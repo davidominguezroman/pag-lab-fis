@@ -31,11 +31,9 @@ const Mrua = () => {
     let posicionTeorica: number[] = [];
     let velocidadTeorica: number[] = [];
     let velocidadMedida: number[] = [];
-    const [aceleracion, setAceleracion] = useState<number>(3);
-    const [velocidadI, setVelocidadI] = useState<number>(27);
+    const aceleracion = -9.81; // m/s²
     const [masa, setMasa] = useState<number>(3);
-    const [xIni, setXIni] = useState<number>(0);
-    const [tTray, setTTray] = useState<number>(30);
+    const [yIni, setYIni] = useState<number>(0);
     const [N, setN] = useState<number>(100);
     const [chartDataPos, setChartDataPos] = useState<ChartTrace[]>([{
                         x: tiempo,
@@ -79,26 +77,23 @@ const Mrua = () => {
             borderColor: 'oklch(0.704 0.04 256.788)', // ring
         });
     function trayectoria() {
-        //if(velocidad !== undefined && masa !== undefined && xIni !== undefined && tTray !== undefined && N !== undefined && masa > 0 && tTray > 0 && 0 < N && N > 100) {
-        console.log(velocidadI);
-        console.log(masa);
-        console.log(xIni);
-        console.log(tTray);
-        console.log(aceleracion);
+        //if(velocidad !== undefined && masa !== undefined && xIni !== undefined && tTray !== undefined && N !== undefined && masa > 0 && tTray > 0 && 0 < N && N > 100) 
         setData([])
         posicion = [];
         tiempo = [];
         posicionTeorica = [];
         velocidadTeorica = [];
         velocidadMedida = [];
+        const tTray = Math.sqrt(2 * (-aceleracion) * yIni) / -aceleracion;
+        console.log(tTray);
         for (let i = 0; i < N; i++) {
             const t = tTray * i / (N-1);
-            const vTeo = velocidadI + aceleracion * t;
+            const vTeo = aceleracion * t;
             const vMed = vTeo + (Math.random() * 0.05 * vTeo);
-            const xTeo = xIni + velocidadI * t + 0.5 * aceleracion * t * t;
-            const x = xTeo + (Math.random() * 0.05 * xTeo);
-            posicionTeorica.push(Number(xTeo.toFixed(3)));
-            posicion.push(Number(x.toFixed(3)));
+            const yTeo = yIni + 0.5 * aceleracion * t * t;
+            const y = yTeo + (Math.random() * 0.05 * yTeo);
+            posicionTeorica.push(Number(yTeo.toFixed(3)));
+            posicion.push(Number(y.toFixed(3)));
             tiempo.push(Number(t.toFixed(3)));
             velocidadTeorica.push(Number(vTeo.toFixed(3)));
             velocidadMedida.push(Number(vMed.toFixed(3)));
@@ -166,14 +161,14 @@ const Mrua = () => {
     return(
         <>
         <Layout>
-                <h1 style={{ textAlign: "center" }}>MRUA</h1>
+                <h1 style={{ textAlign: "center" }}>Caída Libre</h1>
                 <Alert >
                 <AlertTitle>Atención!</AlertTitle>
                 <AlertDescription>
                     Recuerda que no funcionará si: 
                     <ul>
                         <li>La masa es menor o igual que cero</li>
-                        <li>La aceleración es menor o igual que cero</li>
+                        <li>El tiempo es menor o igual que cero</li>
                         <li>El número de cálculos es menor o igual que cero</li>
                         <li>El número de cálculos es mayor que 500</li>
                     </ul>
@@ -184,19 +179,13 @@ const Mrua = () => {
                     <div style={{ flex: '1 1 320px', maxWidth: '48%' }}>
                         <table>
                             <TableRow>
-                                <Label>Velocidad Inicial (m/s): </Label>
-                                <Input style={{ width: "150px" }}  placeholder="Velocidad Inicial" value={velocidadI} onChange={e => setVelocidadI(Number(e.target.value))} />
                                 <Label>Masa(kg): </Label>
                                 <Input style={{ width: "150px" }}  placeholder="Masa" value={masa} onChange={e => setMasa(Number(e.target.value))}/>
-                                <Label>Aceleración (m/s²): </Label>
-                                <Input style={{ width: "150px" }}  placeholder="Aceleración" value={aceleracion} onChange={e => setAceleracion(Number(e.target.value))}/>
                             </TableRow>
                             <TableRow>
                                 <Label>Posición Inicial(m):</Label>
-                                <Input style={{ width: "150px" }}  placeholder="Posición Inicial" value={xIni} onChange={e => setXIni(Number(e.target.value))}/>
-                                <Label>Tiempo del Recorrido(s): </Label>
-                                <Input style={{ width: "150px" }}  placeholder="Tiempo" value={tTray} onChange={e => setTTray(Number(e.target.value))}/>
-                            </TableRow>
+                                <Input style={{ width: "150px" }}  placeholder="Posición Inicial" value={yIni} onChange={e => setYIni(Number(e.target.value))}/>
+                                </TableRow>
                             <TableRow>
                                 <Label>Número de Cálculos: </Label>
                                 <Input style={{ width: "150px" }}  placeholder="Número de Cálculos" value={N} onChange={e => setN(Number(e.target.value))}/>
@@ -205,7 +194,7 @@ const Mrua = () => {
                         <div style={{ marginTop: 12 }}>
                             <Button 
                                 onClick={trayectoria}
-                                disabled={masa <= 0 || N <= 0 || N > 500 || tTray <= 0}
+                                disabled={masa <= 0 || N <= 0 || N > 500 || yIni <= 0}
                             >
                                 <Rocket className="mr-2 h-4 w-4" />
                                 Calcular Trayectoria
