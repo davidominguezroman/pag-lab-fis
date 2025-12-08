@@ -23,6 +23,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           alignItems: "center",
           justifyContent: "center",
           gap: "2rem",
+          marginTop: "1rem",
         }}
       >
         <Link
