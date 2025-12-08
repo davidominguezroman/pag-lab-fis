@@ -574,7 +574,7 @@ const Tirohor = () => {
                 color: "grey", // Force axis line and label color
               },
             }}
-            config={{ displayModeBar: false }}
+            config={{ displayModeBar: true }}
             style={{ borderRadius: "12px" }}
           />
         </div>
@@ -618,7 +618,7 @@ const Tirohor = () => {
                 color: "grey", // Force axis line and label color
               },
             }}
-            config={{ displayModeBar: false }}
+            config={{ displayModeBar: true }}
             style={{ borderRadius: "12px" }}
           />
         </div>
@@ -662,7 +662,7 @@ const Tirohor = () => {
                 color: "grey", // Force axis line and label color
               },
             }}
-            config={{ displayModeBar: false }}
+            config={{ displayModeBar: true }}
             style={{ borderRadius: "12px" }}
           />
         </div>
