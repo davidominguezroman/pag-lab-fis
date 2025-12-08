@@ -14,26 +14,27 @@ import Caili from "./pages/mr/Caili";
 import Tiropar from "./pages/mr/Tiropar";
 import Tirohor from "./pages/mr/Tirohor";
 
-const router = createBrowserRouter([
-  {path: "/", element: <App />},
-  {path: "/mr/Inves", element: <Inves/>},
-  {path: "/mr/Mru", element: <Mru />},
-  {path: "/mr/Mrua", element: <Mrua />},
-  {path: "/mc/Mcu", element: <Mcu />},
-  {path: "/mc/Mcua", element: <Mcua />},
-  {path: "/mr/Caili", element: <Caili />},
-  {path: "/mr/Tiropar", element: <Tiropar />},
-  {path: "/mr/Tirohor", element: <Tirohor />},
-], {
-  basename: "/pag-lab-fis"
-});
+const router = createBrowserRouter(
+  [
+    { path: "/", element: <App /> },
+    { path: "/mr/Inves", element: <Inves /> },
+    { path: "/mr/Mru", element: <Mru /> },
+    { path: "/mr/Mrua", element: <Mrua /> },
+    { path: "/mc/Mcu", element: <Mcu /> },
+    { path: "/mc/Mcua", element: <Mcua /> },
+    { path: "/mr/Caili", element: <Caili /> },
+    { path: "/mr/Tiropar", element: <Tiropar /> },
+    { path: "/mr/Tirohor", element: <Tirohor /> },
+  ],
+  {
+    basename: "/pag-lab-fis",
+  },
+);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </ThemeProvider>
-  </StrictMode>
-  
+  </StrictMode>,
 );
