@@ -132,11 +132,11 @@ const Mrua = () => {
       const vMed = vTeo + (Math.random() * 2 - 1) * Math.abs(vTeo) * 0.05;
       const yTeo = yIni + 0.5 * aceleracion * t * t;
       const y = yTeo + (Math.random() * 2 - 1) * Math.abs(yTeo) * 0.05;
-      posicionTeorica.push(Number(yTeo.toFixed(3)));
-      posicion.push(Number(y.toFixed(3)));
-      tiempo.push(Number(t.toFixed(3)));
-      velocidadTeorica.push(Number(vTeo.toFixed(3)));
-      velocidadMedida.push(Number(vMed.toFixed(3)));
+      posicionTeorica.push(parseFloat(yTeo.toFixed(3)));
+      posicion.push(parseFloat(y.toFixed(3)));
+      tiempo.push(parseFloat(t.toFixed(3)));
+      velocidadTeorica.push(parseFloat(vTeo.toFixed(3)));
+      velocidadMedida.push(parseFloat(vMed.toFixed(3)));
     }
     const newData: {
       tiempo: number;
@@ -258,28 +258,31 @@ const Mrua = () => {
                 <CardContent>
                   <Label>Masa (kg): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Masa"
                     value={masa}
-                    onChange={(e) => setMasa(Number(e.target.value))}
+                    onChange={(e) => setMasa(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Posición Inicial (m):</Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Posición Inicial"
                     value={yIni}
-                    onChange={(e) => setYIni(Number(e.target.value))}
+                    onChange={(e) => setYIni(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Número de Cálculos: </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Número de Cálculos"
                     value={N}
-                    onChange={(e) => setN(Number(e.target.value))}
+                    onChange={(e) => setN(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardFooter>

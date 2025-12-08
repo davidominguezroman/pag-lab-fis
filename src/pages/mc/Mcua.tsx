@@ -146,15 +146,15 @@ const Mcua = () => {
       const vMed = vTeo + (Math.random() * 2 - 1) * vTeo * 0.05;
       const phiTeo = phiIni + velAngI * t + 0.5 * acelAng * t * t;
       const phiExp = phiTeo + (Math.random() * 2 - 1) * phiTeo * 0.05;
-      angTeo.push(Number(phiTeo.toFixed(4)));
-      angExp.push(Number(phiExp.toFixed(4)));
-      tiempo.push(Number(t.toFixed(4)));
-      velAngTeo.push(Number(vTeo.toFixed(4)));
-      velAngExp.push(Number(vMed.toFixed(4)));
-      xTeo.push(Number((radio * Math.cos(phiTeo)).toFixed(4)));
-      yTeo.push(Number((radio * Math.sin(phiTeo)).toFixed(4)));
-      xExp.push(Number((radio * Math.cos(phiExp)).toFixed(4)));
-      yExp.push(Number((radio * Math.sin(phiExp)).toFixed(4)));
+      angTeo.push(parseFloat(phiTeo.toFixed(4)));
+      angExp.push(parseFloat(phiExp.toFixed(4)));
+      tiempo.push(parseFloat(t.toFixed(4)));
+      velAngTeo.push(parseFloat(vTeo.toFixed(4)));
+      velAngExp.push(parseFloat(vMed.toFixed(4)));
+      xTeo.push(parseFloat((radio * Math.cos(phiTeo)).toFixed(4)));
+      yTeo.push(parseFloat((radio * Math.sin(phiTeo)).toFixed(4)));
+      xExp.push(parseFloat((radio * Math.cos(phiExp)).toFixed(4)));
+      yExp.push(parseFloat((radio * Math.sin(phiExp)).toFixed(4)));
     }
     const newData: {
       tiempo: number;
@@ -313,64 +313,71 @@ const Mcua = () => {
                 <CardContent>
                   <Label>Velocidad Angular Inicial (rad/s): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Velocidad Inicial"
                     value={velAngI}
-                    onChange={(e) => setVelAngI(Number(e.target.value))}
+                    onChange={(e) => setVelAngI(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Masa (kg): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Masa"
                     value={masa}
-                    onChange={(e) => setMasa(Number(e.target.value))}
+                    onChange={(e) => setMasa(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Aceleración Angular (rad/s²): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Aceleración"
                     value={acelAng}
-                    onChange={(e) => setAcelAng(Number(e.target.value))}
+                    onChange={(e) => setAcelAng(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Ángulo Inicial (rad):</Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Ángulo Inicial"
                     value={phiIni}
-                    onChange={(e) => setPhiIni(Number(e.target.value))}
+                    onChange={(e) => setPhiIni(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Tiempo del Recorrido (s): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Tiempo"
                     value={tTray}
-                    onChange={(e) => setTTray(Number(e.target.value))}
+                    onChange={(e) => setTTray(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Radio (m): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Radio"
                     value={radio}
-                    onChange={(e) => setRadio(Number(e.target.value))}
+                    onChange={(e) => setRadio(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Número de Cálculos: </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Número de Cálculos"
                     value={N}
-                    onChange={(e) => setN(Number(e.target.value))}
+                    onChange={(e) => setN(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardFooter>

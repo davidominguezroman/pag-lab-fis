@@ -97,9 +97,9 @@ const Mru = () => {
       const t = (tTray * i) / (N - 1);
       const xTeo = xIni + velocidad * t;
       const x = xTeo + (Math.random() * 2 - 1) * Math.abs(xTeo) * 0.05;
-      posicionTeorica.push(Number(xTeo.toFixed(3)));
-      posicion.push(Number(x.toFixed(3)));
-      tiempo.push(Number(t.toFixed(3)));
+      posicionTeorica.push(parseFloat(xTeo.toFixed(3)));
+      posicion.push(parseFloat(x.toFixed(3)));
+      tiempo.push(parseFloat(t.toFixed(3)));
     }
     const newData: {
       tiempo: number;
@@ -187,46 +187,51 @@ const Mru = () => {
                 <CardContent>
                   <Label>Velocidad (m/s): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Velocidad"
                     value={velocidad}
-                    onChange={(e) => setVelocidad(Number(e.target.value))}
+                    onChange={(e) => setVelocidad(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Masa (kg): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Masa"
                     value={masa}
-                    onChange={(e) => setMasa(Number(e.target.value))}
+                    onChange={(e) => setMasa(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Posición Inicial (m):</Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Posición Inicial"
                     value={xIni}
-                    onChange={(e) => setXIni(Number(e.target.value))}
+                    onChange={(e) => setXIni(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Tiempo del Recorrido (s): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Tiempo"
                     value={tTray}
-                    onChange={(e) => setTTray(Number(e.target.value))}
+                    onChange={(e) => setTTray(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Número de Cálculos: </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Número de Cálculos"
                     value={N}
-                    onChange={(e) => setN(Number(e.target.value))}
+                    onChange={(e) => setN(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardFooter>

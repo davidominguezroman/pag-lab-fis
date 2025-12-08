@@ -175,15 +175,15 @@ const Tiropar = () => {
       const vyMed = vyTeo + (Math.random() * 2 - 1) * Math.abs(vyTeo) * 0.05;
       const yTeo = yIni + velI * Math.sin(ang) * t + 0.5 * G * t * t;
       const y = yTeo + (Math.random() * 2 - 1) * Math.abs(yTeo) * 0.05;
-      posYTeo.push(Number(yTeo.toFixed(4)));
-      posYExp.push(Number(y.toFixed(4)));
-      velYTeo.push(Number(vyTeo.toFixed(4)));
-      velYExp.push(Number(vyMed.toFixed(4)));
-      posXTeo.push(Number(xTeo.toFixed(4)));
-      posXExp.push(Number(x.toFixed(4)));
-      tiempo.push(Number(t.toFixed(4)));
-      velXTeo.push(Number(vxTeo.toFixed(4)));
-      velXExp.push(Number(vxMed.toFixed(4)));
+      posYTeo.push(parseFloat(yTeo.toFixed(4)));
+      posYExp.push(parseFloat(y.toFixed(4)));
+      velYTeo.push(parseFloat(vyTeo.toFixed(4)));
+      velYExp.push(parseFloat(vyMed.toFixed(4)));
+      posXTeo.push(parseFloat(xTeo.toFixed(4)));
+      posXExp.push(parseFloat(x.toFixed(4)));
+      tiempo.push(parseFloat(t.toFixed(4)));
+      velXTeo.push(parseFloat(vxTeo.toFixed(4)));
+      velXExp.push(parseFloat(vxMed.toFixed(4)));
     }
     const newData: {
       tiempo: number;
@@ -368,57 +368,63 @@ const Tiropar = () => {
                 <CardContent>
                   <Label>Velocidad Inicial (m/s): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Velocidad Inicial"
                     value={velI}
-                    onChange={(e) => setVelI(Number(e.target.value))}
+                    onChange={(e) => setVelI(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Masa(kg): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Masa"
                     value={masa}
-                    onChange={(e) => setMasa(Number(e.target.value))}
+                    onChange={(e) => setMasa(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Posición X Inicial(m):</Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Posición Inicial"
                     value={xIni}
-                    onChange={(e) => setXIni(Number(e.target.value))}
+                    onChange={(e) => setXIni(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Posición Y Inicial(m): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Posición Y Inicial"
                     value={yIni}
-                    onChange={(e) => setYIni(Number(e.target.value))}
+                    onChange={(e) => setYIni(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Ángulo (°): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Ángulo"
                     value={ang}
                     onChange={(e) =>
-                      setAng((Number(e.target.value) * 180) / Math.PI)
+                      setAng((parseFloat(e.target.value) * 180) / Math.PI)
                     }
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Número de Cálculos: </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Número de Cálculos"
                     value={N}
-                    onChange={(e) => setN(Number(e.target.value))}
+                    onChange={(e) => setN(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardFooter>

@@ -137,11 +137,11 @@ const Mrua = () => {
       const vMed = vTeo + (Math.random() * 2 - 1) * Math.abs(vTeo) * 0.05;
       const xTeo = xIni + velocidadI * t + 0.5 * aceleracion * t * t;
       const x = xTeo + (Math.random() * 2 - 1) * Math.abs(xTeo) * 0.05;
-      posicionTeorica.push(Number(xTeo.toFixed(3)));
-      posicion.push(Number(x.toFixed(3)));
-      tiempo.push(Number(t.toFixed(3)));
-      velocidadTeorica.push(Number(vTeo.toFixed(3)));
-      velocidadMedida.push(Number(vMed.toFixed(3)));
+      posicionTeorica.push(parseFloat(xTeo.toFixed(3)));
+      posicion.push(parseFloat(x.toFixed(3)));
+      tiempo.push(parseFloat(t.toFixed(3)));
+      velocidadTeorica.push(parseFloat(vTeo.toFixed(3)));
+      velocidadMedida.push(parseFloat(vMed.toFixed(3)));
     }
     const newData: {
       tiempo: number;
@@ -262,55 +262,61 @@ const Mrua = () => {
                 <CardContent>
                   <Label>Velocidad Inicial (m/s): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Velocidad Inicial"
                     value={velocidadI}
-                    onChange={(e) => setVelocidadI(Number(e.target.value))}
+                    onChange={(e) => setVelocidadI(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Masa (kg): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Masa"
                     value={masa}
-                    onChange={(e) => setMasa(Number(e.target.value))}
+                    onChange={(e) => setMasa(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Aceleración (m/s²): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Aceleración"
                     value={aceleracion}
-                    onChange={(e) => setAceleracion(Number(e.target.value))}
+                    onChange={(e) => setAceleracion(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Posición Inicial (m):</Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Posición Inicial"
                     value={xIni}
-                    onChange={(e) => setXIni(Number(e.target.value))}
+                    onChange={(e) => setXIni(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Tiempo del Recorrido (s): </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Tiempo"
                     value={tTray}
-                    onChange={(e) => setTTray(Number(e.target.value))}
+                    onChange={(e) => setTTray(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardContent>
                   <Label>Número de Cálculos: </Label>
                   <Input
+                    type="number"
                     style={{ width: "150px" }}
                     placeholder="Número de Cálculos"
                     value={N}
-                    onChange={(e) => setN(Number(e.target.value))}
+                    onChange={(e) => setN(parseFloat(e.target.value))}
                   />
                 </CardContent>
                 <CardFooter>
