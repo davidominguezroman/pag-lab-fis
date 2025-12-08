@@ -12,6 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import faviconUrl from "/favicon.svg?url";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -38,7 +39,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           }}
         >
             <img 
-            src = "./favicon.ico"
+            src={faviconUrl}
             alt="Lab Icon"
             style={{ width: "2rem", height: "2rem", marginBottom: "0.5rem" }}
             />
