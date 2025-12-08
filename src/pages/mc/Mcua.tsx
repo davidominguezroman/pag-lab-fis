@@ -25,44 +25,57 @@ interface ChartTrace {
 }
 
 // Movimiento Rectilíneo Uniforme (MRU)
-const Mru = () => {
+const Mcua = () => {
     let tiempo: number[] = [];
-    let angulo: number[] = [];
-    let anguloTeorico: number[] = [];
-    const [velocidadAngular, setVelocidadAngular] = useState<number>(1);
+    let angExp: number[] = [];
+    let angTeo: number[] = [];
+    const [radio, setRadio] = useState<number>(0.5);
+    let velAngTeo: number[] = [];
+    let velAngExp: number[] = [];
+    const [acelAng, setAcelAng] = useState<number>(3);
+    const [velAngI, setVelAngI] = useState<number>(1);
     const [masa, setMasa] = useState<number>(3);
     const [phiIni, setPhiIni] = useState<number>(0);
-    const [radio, setRadio] = useState<number>(0.5);
-    const [tTray, setTTray] = useState<number>(30);
+    const [tTray, setTTray] = useState<number>(10);
     const [N, setN] = useState<number>(500);
-    const [chartData, setChartData] = useState<ChartTrace[]>([{
+    const [chartDataAng, setChartDataAng] = useState<ChartTrace[]>([{
                         x: tiempo,
-                        y: angulo,
+                        y: angExp,
                         type: 'scatter',
                         mode: 'lines+markers',
                         marker: {color: 'red'},
                         name: 'Posición medida',
                         showlegend: true,
                     }])
-    const xTeo:number [] = []
-    const yTeo:number [] = []
-    let x: number[] = [];
-    let y: number[] = [];
-    const [chartAng, setChartAng] = useState<ChartTrace[]>([{
-                        x: x,
-                        y: y,
+    const [chartDataVel, setChartDataVel] = useState<ChartTrace[]>([{
+                        x: tiempo,
+                        y: velAngExp,
                         type: 'scatter',
                         mode: 'lines+markers',
-                        marker: {color: 'red'},
-                        name: 'Posición medida',
+                        marker: {color: 'blue'},
+                        name: 'Velocidad medida',
                         showlegend: true,
                     }])
-    const [data, setData] = useState<{ tiempo: number, anguloMedido: number, anguloTeorico: number }[]>([]);
-    
-    const [colDefs, setColDefs] = useState<{ headerName?: string; field: "tiempo" | "anguloMedido" | "anguloTeorico" }[]>([
+    let xExp: number[] = [];
+    let yExp: number[] = [];
+    let xTeo: number[] = [];
+    let yTeo: number[] = [];
+    const [chartDataPos, setChartDataPos] = useState<ChartTrace[]>([{
+                        x: xExp,
+                        y: yExp,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        marker: {color: 'green'},
+                        name: 'Trayectoria',
+                        showlegend: true,
+                    }])
+    const [data, setData] = useState<{ tiempo: number, angExp: number, angTeo: number, velAngExp: number, velAngTeo: number }[]>([]);
+    const [colDefs, setColDefs] = useState<{ headerName?: string; field: "tiempo" | "angExp" | "angTeo" | "velAngTeo" | "velAngExp" }[]>([
         { field: "tiempo" },
-        { field: "anguloMedido" },
-        { field: "anguloTeorico" },
+        { field: "angExp" },
+        { field: "angTeo" },
+        { field: "velAngTeo" },
+        { field: "velAngExp" },
         ])
         const myTheme = themeQuartz.withParams({
             /* Low spacing = very compact */
@@ -79,91 +92,125 @@ const Mru = () => {
             borderColor: 'oklch(0.704 0.04 256.788)', // ring
         });
     function trayectoria() {
-        setData([]);
-        x = [];
-        y = [];
-        anguloTeorico = [];
-        angulo = [];
+        //if(velocidad !== undefined && masa !== undefined && xIni !== undefined && tTray !== undefined && N !== undefined && masa > 0 && tTray > 0 && 0 < N && N > 100) {
+        setData([])
+        angExp = [];
         tiempo = [];
+        angTeo = [];
+        velAngTeo = [];
+        velAngExp = [];
+        xExp = [];
+        yExp = [];
+        xTeo = [];
+        yTeo = [];
         for (let i = 0; i < N; i++) {
             const t = tTray * i / (N-1);
-            const phiTeo = phiIni + velocidadAngular * t;
-            const phi = phiTeo + (Math.random() * 0.05 * phiTeo);
-            anguloTeorico.push(Number(phiTeo.toFixed(4)));
-            angulo.push(Number(phi.toFixed(4)));
+            const vTeo = velAngI + acelAng * t;
+            const vMed = vTeo + (Math.random() * 0.05 * vTeo);
+            const phiTeo = phiIni + velAngI * t + 0.5 * acelAng * t * t;
+            const phiExp = phiTeo + (Math.random() * 0.05 * phiTeo);
+            angTeo.push(Number(phiTeo.toFixed(4)));
+            angExp.push(Number(phiExp.toFixed(4)));
             tiempo.push(Number(t.toFixed(4)));
+            velAngTeo.push(Number(vTeo.toFixed(4)));
+            velAngExp.push(Number(vMed.toFixed(4)));
+            xTeo.push(Number((radio * Math.cos(phiTeo)).toFixed(4)));
+            yTeo.push(Number((radio * Math.sin(phiTeo)).toFixed(4)));
+            xExp.push(Number((radio * Math.cos(phiExp)).toFixed(4)));
+            yExp.push(Number((radio * Math.sin(phiExp)).toFixed(4)));
         }
-        const newData: { tiempo: number, anguloMedido: number, anguloTeorico: number }[] = []
+        const newData: { tiempo: number, angExp: number, angTeo: number, velAngExp: number, velAngTeo: number}[] = []
         for (let i = 0; i< N; i++) {
-            newData.push({ "tiempo": tiempo[i], "anguloMedido": angulo[i], "anguloTeorico": anguloTeorico[i] });
-            xTeo.push(radio * Math.cos(anguloTeorico[i]));
-            yTeo.push(radio * Math.sin(anguloTeorico[i]));
-            x.push(radio * Math.cos(angulo[i]));
-            y.push(radio * Math.sin(angulo[i]));
+            newData.push({ "tiempo": tiempo[i], "angExp": angExp[i], "angTeo": angTeo[i], "velAngExp": velAngExp[i], "velAngTeo": velAngTeo[i] });
+        
         }
+
         setData(newData)
-        setChartData([
+        setChartDataAng([
                     {
                         x: tiempo,
-                        y: angulo,
+                        y: angExp,
                         type: 'scatter',
                         mode: 'markers',
                         marker: {color: 'red'},
-                        name: 'Ángulo medido',
+                        name: 'Ángulo Experimental (rad)',
                         showlegend: true,
                     },
                     {
                         x: tiempo,
-                        y: anguloTeorico,
+                        y: angTeo,
                         type: 'scatter',
                         mode: 'lines',
-                        line: { shape: 'spline'},
-                        name: 'Ángulo teórico',
+                        line: { color: 'blue', shape: 'spline' },
+                        name: 'Ángulo Teórico (rad)',
                         showlegend: true,
-                    }
+                    },
+
                 ])
-        setChartAng([
+        setChartDataVel([
                     {
                         x: tiempo,
-                        y: y,
+                        y: velAngExp,
                         type: 'scatter',
                         mode: 'markers',
-                        marker: {color: 'red'},
-                        name: 'Posición Y medida',
+                        marker: {color: 'orange'},
+                        name: 'Velocidad Angular Experimental (rad/s)',
                         showlegend: true,
                     },
                     {
+                        x: tiempo,
+                        y: velAngTeo,
+                        type: 'scatter',
+                        mode: 'lines',
+                        line: { color: 'green' },
+                        name: 'Velocidad Angular Teórica (rad/s)',
+                        showlegend: true,
+                    },
+
+                ])
+        setChartDataPos([
+            {
                         x: tiempo,
                         y: yTeo,
                         type: 'scatter',
                         mode: 'lines',
                         line: { color: 'blue', shape: 'spline' },
-                        name: 'Posición Y teórica',
+                        name: 'Posición Y teórica (m)',
                         showlegend: true,
-                    },
-                    {
+            },           
+            {
                         x: tiempo,
-                        y: x,
+                        y: yExp,
                         type: 'scatter',
                         mode: 'markers',
-                        marker: {color: 'orange'},
-                        name: 'Posición X medida',
+                        marker: {color: 'red'},
+                        name: 'Posición Y experimental (m)',
                         showlegend: true,
                     },
-                    {
+                {
                         x: tiempo,
                         y: xTeo,
                         type: 'scatter',
                         mode: 'lines',
                         line: { color: 'green', shape: 'spline' },
-                        name: 'Posición X teórica',
+                        name: 'Posición X teórica (m)',
                         showlegend: true,
-                    }
-                ])
+                },
+            {
+                        x: tiempo,
+                        y: xExp,
+                        type: 'scatter',
+                        mode: 'markers',
+                        marker: {color: 'orange'},
+                        name: 'Posición X experimental (m)',
+                        showlegend: true,
+            }])
         setColDefs([
         { headerName: "Tiempo / s", field: "tiempo" as const },
-        { headerName: "Ángulo Medido / rad", field: "anguloMedido" as const },
-        { headerName: "Ángulo Teórico / rad", field: "anguloTeorico" as const },
+        { headerName: "Ángulo Exp(rad)", field: "angExp" as const },
+        { headerName: "Ángulo Teo (rad)", field: "angTeo" as const },
+        { headerName: "Velocidad Angular Teo (rad/s)", field: "velAngTeo" as const },
+        { headerName: "Velocidad Angular Exp (rad/s)", field: "velAngExp" as const },
         ])
         
     }
@@ -173,7 +220,7 @@ const Mru = () => {
     return(
         <>
         <Layout>
-                <h1 style={{ textAlign: "center" }}>MCU</h1>
+                <h1 style={{ textAlign: "center" }}>MCUA</h1>
                 <Alert >
                 <AlertTitle>Atención!</AlertTitle>
                 <AlertDescription>
@@ -191,20 +238,22 @@ const Mru = () => {
                     <div style={{ flex: '1 1 320px', maxWidth: '48%' }}>
                         <table>
                             <TableRow>
-                                <Label>Velocidad(rad/s): </Label>
-                                <Input style={{ width: "150px" }}  placeholder="Velocidad (rad/s)" value={velocidadAngular} onChange={e => setVelocidadAngular(Number(e.target.value))} />
+                                <Label>Velocidad Angular Inicial (rad/s): </Label>
+                                <Input style={{ width: "150px" }}  placeholder="Velocidad Inicial" value={velAngI} onChange={e => setVelAngI(Number(e.target.value))} />
                                 <Label>Masa(kg): </Label>
                                 <Input style={{ width: "150px" }}  placeholder="Masa" value={masa} onChange={e => setMasa(Number(e.target.value))}/>
+                                <Label>Aceleración Angular (rad/s²): </Label>
+                                <Input style={{ width: "150px" }}  placeholder="Aceleración" value={acelAng} onChange={e => setAcelAng(Number(e.target.value))}/>
                             </TableRow>
                             <TableRow>
-                                <Label>Ángulo Inicial(rad):</Label>
-                                <Input style={{ width: "150px" }}  placeholder="Ángulo Inicial (rad)" value={phiIni} onChange={e => setPhiIni(Number(e.target.value))}/>
+                                <Label>Ángulo Inicial (rad):</Label>
+                                <Input style={{ width: "150px" }}  placeholder="Ángulo Inicial" value={phiIni} onChange={e => setPhiIni(Number(e.target.value))}/>
                                 <Label>Tiempo del Recorrido(s): </Label>
                                 <Input style={{ width: "150px" }}  placeholder="Tiempo" value={tTray} onChange={e => setTTray(Number(e.target.value))}/>
                             </TableRow>
                             <TableRow>
-                                <Label>Radio de Giro (m): </Label>
-                                <Input style={{ width: "150px" }}  placeholder="Radio de Giro" value={radio} onChange={e => setRadio(Number(e.target.value))}/>
+                                <Label>Radio (m): </Label>
+                                <Input style={{ width: "150px" }}  placeholder="Radio" value={radio} onChange={e => setRadio(Number(e.target.value))}/>
                                 <Label>Número de Cálculos: </Label>
                                 <Input style={{ width: "150px" }}  placeholder="Número de Cálculos" value={N} onChange={e => setN(Number(e.target.value))}/>
                             </TableRow>
@@ -224,8 +273,10 @@ const Mru = () => {
                                     exportToExcel({ 
                                         data: data.map(row => ({
                                             'Tiempo (s)': row.tiempo,
-                                            'Ángulo Medido (rad)': row.anguloMedido,
-                                            'Ángulo Teórico (rad)': row.anguloTeorico
+                                            'Ángulo Exp (rad)': row.angExp,
+                                            'Ángulo Teo (rad)': row.angTeo,
+                                            'Velocidad Angular Exp (rad/s)': row.velAngExp,
+                                            'Velocidad Angular Teo (rad/s)': row.velAngTeo
                                         })),
                                         fileName: `datos-mru-${timestamp}`,
                                         sheetName: 'Resultados MRU'
@@ -241,7 +292,7 @@ const Mru = () => {
                         </div>
                     </div>
 
-                    <div style={{ height: 500,width: 600 }} className="ag-theme-quartz">
+                    <div style={{ height: 500,width: 1000 }} className="ag-theme-quartz">
                         <AgGridReact
                         theme={myTheme}
                         rowData={data}
@@ -261,11 +312,11 @@ const Mru = () => {
                                 margin: '0 auto'
                             }}>
                 <Plot
-                    data={chartData}
+                    data={chartDataAng}
                     layout={{
                         width: 1440,
                         height: 1080,
-                        title: { text: 'Posición en función del tiempo' },
+                        title: { text: 'Ángulo en función del tiempo' },
                         paper_bgcolor: '#FFFFFF',
                         plot_bgcolor: '#FFFFFF',
                         font: { color: 'black' },
@@ -280,7 +331,7 @@ const Mru = () => {
                             color: 'grey', // Force axis line and label color
                         },
                         yaxis: {
-                            title: { text: 'Ángulo (rad)' },
+                            title: { text: 'Posición (m)' },
                             gridcolor: '#222', // even more muted gray
                             gridwidth: 0.3,
                             linecolor: 'grey',
@@ -302,7 +353,48 @@ const Mru = () => {
                                 margin: '0 auto'
                             }}>
                 <Plot
-                    data={chartAng}
+                    data={chartDataVel}
+                    layout={{
+                        width: 1440,
+                        height: 1080,
+                        title: { text: 'Velocidad Angular en función del tiempo' },
+                        paper_bgcolor: '#FFFFFF',
+                        plot_bgcolor: '#FFFFFF',
+                        font: { color: 'black' },
+                        margin: { t: 60, b: 60, l: 60, r: 60 },
+                        xaxis: {
+                            title: { text: 'Tiempo (s)' },
+                            gridcolor: '#222', // even more muted gray
+                            gridwidth: 0.3,
+                            linecolor: 'grey',
+                            tickcolor: 'grey',
+                            tickfont: { color: 'grey' },
+                            color: 'grey', // Force axis line and label color
+                        },
+                        yaxis: {
+                            title: { text: 'Velocidad Angular (rad/s)' },
+                            gridcolor: '#222', // even more muted gray
+                            gridwidth: 0.3,
+                            linecolor: 'grey',
+                            tickcolor: 'grey',
+                            tickfont: { color: 'grey' },
+                            color: 'grey', // Force axis line and label color
+                        },
+                    }}
+                    
+                    
+                />
+            </div>
+            <div style={{
+                                borderRadius: 12,
+                                boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+                                overflow: 'hidden',
+                                display: 'block',
+                                width: 1440,
+                                margin: '0 auto'
+                            }}>
+            <Plot
+                    data={chartDataPos}
                     layout={{
                         width: 1440,
                         height: 1080,
@@ -334,9 +426,9 @@ const Mru = () => {
                     
                 />
             </div>
-            </Layout>
+            </Layout>   
         </>
     );    
 }
 
-export default Mru;
+export default Mcua;

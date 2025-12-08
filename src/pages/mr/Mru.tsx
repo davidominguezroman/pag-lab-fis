@@ -33,7 +33,7 @@ const Mru = () => {
     const [masa, setMasa] = useState<number>(3);
     const [xIni, setXIni] = useState<number>(0);
     const [tTray, setTTray] = useState<number>(30);
-    const [N, setN] = useState<number>(5);
+    const [N, setN] = useState<number>(100);
     const [chartData, setChartData] = useState<ChartTrace[]>([{
                         x: tiempo,
                         y: posicion,
@@ -73,9 +73,9 @@ const Mru = () => {
             const t = tTray * i / (N-1);
             const xTeo = xIni + velocidad * t;
             const x = xTeo + (Math.random() * 0.05 * xTeo);
-            posicionTeorica.push(Number(xTeo.toFixed(2)));
-            posicion.push(Number(x.toFixed(2)));
-            tiempo.push(Number(t.toFixed(2)));
+            posicionTeorica.push(Number(xTeo.toFixed(4)));
+            posicion.push(Number(x.toFixed(4)));
+            tiempo.push(Number(t.toFixed(4)));
         }
         const newData: { tiempo: number, posicionMedida: number, posicionTeorica: number }[] = []
         for (let i = 0; i< N; i++) {
@@ -124,7 +124,7 @@ const Mru = () => {
                         <li>La masa es menor o igual que cero</li>
                         <li>El tiempo es menor o igual que cero</li>
                         <li>El número de cálculos es menor o igual que cero</li>
-                        <li>El número de cálculos es mayor que 100</li>
+                        <li>El número de cálculos es mayor que 500</li>
                     </ul>
                 </AlertDescription>
                 </Alert>
@@ -152,7 +152,7 @@ const Mru = () => {
                         <div style={{ marginTop: 12 }}>
                             <Button 
                                 onClick={trayectoria}
-                                disabled={masa <= 0 || N <= 0 || N > 100 || tTray <= 0}
+                                disabled={masa <= 0 || N <= 0 || N > 500 || tTray <= 0}
                             >
                                 <Rocket className="mr-2 h-4 w-4" />
                                 Calcular Trayectoria

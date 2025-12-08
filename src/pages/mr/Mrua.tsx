@@ -19,7 +19,7 @@ interface ChartTrace {
     type: 'scatter';
     mode: 'lines+markers' | 'markers' | 'lines' | 'text' | 'none' | 'text+markers' | 'text+lines' | 'text+lines+markers';
     marker?: { color: string };
-    line?: { color: string };
+    line?: { color?: string; shape?: 'hv' | 'linear' | 'spline' | 'vh' | 'hvh' | 'vhv' };
     name: string;
     showlegend: boolean;
 }
@@ -36,7 +36,7 @@ const Mrua = () => {
     const [masa, setMasa] = useState<number>(3);
     const [xIni, setXIni] = useState<number>(0);
     const [tTray, setTTray] = useState<number>(30);
-    const [N, setN] = useState<number>(5);
+    const [N, setN] = useState<number>(100);
     const [chartDataPos, setChartDataPos] = useState<ChartTrace[]>([{
                         x: tiempo,
                         y: posicion,
@@ -97,11 +97,11 @@ const Mrua = () => {
             const vMed = vTeo + (Math.random() * 0.05 * vTeo);
             const xTeo = xIni + velocidadI * t + 0.5 * aceleracion * t * t;
             const x = xTeo + (Math.random() * 0.05 * xTeo);
-            posicionTeorica.push(Number(xTeo.toFixed(2)));
-            posicion.push(Number(x.toFixed(2)));
-            tiempo.push(Number(t.toFixed(2)));
-            velocidadTeorica.push(Number(vTeo.toFixed(2)));
-            velocidadMedida.push(Number(vMed.toFixed(2)));
+            posicionTeorica.push(Number(xTeo.toFixed(4)));
+            posicion.push(Number(x.toFixed(4)));
+            tiempo.push(Number(t.toFixed(4)));
+            velocidadTeorica.push(Number(vTeo.toFixed(4)));
+            velocidadMedida.push(Number(vMed.toFixed(4)));
         }
         const newData: { tiempo: number, posicionMedida: number, posicionTeorica: number, velocidadMedida: number, VelocidadTeorica: number}[] = []
         for (let i = 0; i< N; i++) {
@@ -124,7 +124,7 @@ const Mrua = () => {
                         y: posicionTeorica,
                         type: 'scatter',
                         mode: 'lines',
-                        line: { color: 'blue' },
+                        line: { color: 'blue', shape: 'spline' },
                         name: 'Posición teórica',
                         showlegend: true,
                     },
@@ -175,7 +175,7 @@ const Mrua = () => {
                         <li>La masa es menor o igual que cero</li>
                         <li>El tiempo es menor o igual que cero</li>
                         <li>El número de cálculos es menor o igual que cero</li>
-                        <li>El número de cálculos es mayor que 100</li>
+                        <li>El número de cálculos es mayor que 500</li>
                     </ul>
                 </AlertDescription>
                 </Alert>
@@ -205,7 +205,7 @@ const Mrua = () => {
                         <div style={{ marginTop: 12 }}>
                             <Button 
                                 onClick={trayectoria}
-                                disabled={masa <= 0 || N <= 0 || N > 100 || tTray <= 0}
+                                disabled={masa <= 0 || N <= 0 || N > 500 || tTray <= 0}
                             >
                                 <Rocket className="mr-2 h-4 w-4" />
                                 Calcular Trayectoria
@@ -236,7 +236,7 @@ const Mrua = () => {
                         </div>
                     </div>
 
-                    <div style={{ height: 500,width: 600 }} className="ag-theme-quartz">
+                    <div style={{ height: 500,width: 1000 }} className="ag-theme-quartz">
                         <AgGridReact
                         theme={myTheme}
                         rowData={data}
