@@ -516,8 +516,8 @@ const Tirohor = () => {
                     "Velocidad Y Medida (m/s)": row.velYExp,
                     "Velocidad Y Teórica (m/s)": row.velYTeo,
                   })),
-                  fileName: `datos-tiropar-${timestamp}`,
-                  sheetName: "Resultados Tiro Parabólico",
+                  fileName: `datos-tirohor-${timestamp}`,
+                  sheetName: "Resultados Tiro Horizontal",
                 });
               }}
               variant="outline"
