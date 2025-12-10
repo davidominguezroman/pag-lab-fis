@@ -57,7 +57,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   <li className="row-span-5">
                     <NavigationMenuLink asChild>
                       <Link
-                        to="/mr/Inves"
+                        to="/mr/MrInves"
                         className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden transition-all duration-200 select-none focus:shadow-md md:p-6"
                       >
                         <span style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>⚡</span>
@@ -98,7 +98,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        to="/mr/Inves"
+                        to="/mc/McInves"
                         className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden transition-all duration-200 select-none focus:shadow-md md:p-6"
                       >
                         <span style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🔍</span>
@@ -117,6 +117,62 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </ListItem>
                   <ListItem href="/mc/Mcua" title="MCUA">
                     Movimiento Circular Uniformemente Acelerado.
+                  </ListItem>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                Campo Eléctrico
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        to="/ef/EfInves"
+                        className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden transition-all duration-200 select-none focus:shadow-md md:p-6"
+                      >
+                        <span style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🔍</span>
+                        <div className="mb-2 text-lg font-medium sm:mt-4">
+                          Investiga
+                        </div>
+                        <p className="text-muted-foreground text-sm leading-tight">
+                          Accede a toda la información sobre el campo eléctrico.
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  <ListItem href="/ef/Charges" title="Cargas">
+                    Cálculo de campo eléctrico y superficies equipotenciales para cargas puntuales.
+                  </ListItem>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                Campo Gravitatorio
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        to="/grav/GravInves"
+                        className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden transition-all duration-200 select-none focus:shadow-md md:p-6"
+                      >
+                        <span style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🔍</span>
+                        <div className="mb-2 text-lg font-medium sm:mt-4">
+                          Investiga
+                        </div>
+                        <p className="text-muted-foreground text-sm leading-tight">
+                          Accede a toda la información sobre el campo gravitatorio.
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  <ListItem href="/grav/Grav" title="Masas">
+                    Cálculo del campo gravitatorio y superficies equipotenciales de masas puntuales.
                   </ListItem>
                 </ul>
               </NavigationMenuContent>

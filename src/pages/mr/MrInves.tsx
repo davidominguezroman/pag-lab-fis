@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout/layout";
-function Inves() {
+function MrInves() {
   return (
     <>
       <Layout>
@@ -9,4 +9,4 @@ function Inves() {
   );
 }
 
-export default Inves;
+export default MrInves;
